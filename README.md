@@ -116,10 +116,10 @@ FROM retail_sales
 GROUP BY gender;
 ```
 
-##🔬 Advanced Analytics
+## 🔬 Advanced Analytics
 Using advanced SQL techniques to extract deeper operational insights.
 
-###👥 Customer Age Segmentation (Using CTEs)
+### 👥 Customer Age Segmentation (Using CTEs)
 I utilized a Common Table Expression (CTE) combined with a CASE statement to categorize customers into age brackets, making the data highly actionable for the marketing team.
 
 ```sql
@@ -145,7 +145,7 @@ GROUP BY age_group
 ORDER BY total_revenue DESC;
 ```
 
-###🏆 Top 5 VIP Customers
+### 🏆 Top 5 VIP Customers
 Identifying the highest-spending customers by lifetime value.
 
 ```sql
@@ -159,7 +159,7 @@ GROUP BY customer_id, gender, age
 ORDER BY lifetime_value DESC
 LIMIT 5;
 ```
-###⏰ Peak Shopping Hours
+### ⏰ Peak Shopping Hours
 By extracting the hour from the timestamp, I identified the busiest times of day to help store managers optimize staff scheduling.
 
 ```sql
