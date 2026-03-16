@@ -77,7 +77,7 @@ SELECT DISTINCT category FROM retail_sales;
 These queries answer core business questions regarding revenue, profitability, and customer behavior.
 
 ### 💰 Profitability by Category
-Revenue is vanity, profit is sanity. I calculated the actual net profit per category by subtracting the Cost of Goods Sold (COGS).
+I calculated the actual net profit per category by subtracting the Cost of Goods Sold (COGS).
 
 ```sql
 SELECT 
@@ -114,4 +114,60 @@ SELECT
     AVG(total_sale) AS avg_spent_per_transaction
 FROM retail_sales
 GROUP BY gender;
+```
+
+##🔬 Advanced Analytics
+Using advanced SQL techniques to extract deeper operational insights.
+
+###👥 Customer Age Segmentation (Using CTEs)
+I utilized a Common Table Expression (CTE) combined with a CASE statement to categorize customers into age brackets, making the data highly actionable for the marketing team.
+
+```sql
+WITH Age_Demographics AS (
+    SELECT 
+        transactions_id,
+        customer_id,
+        total_sale,
+        CASE 
+            WHEN age < 25 THEN 'Youth (Under 25)'
+            WHEN age BETWEEN 25 AND 40 THEN 'Young Adults (25-40)'
+            WHEN age BETWEEN 41 AND 60 THEN 'Middle-Aged (41-60)'
+            ELSE 'Seniors (60+)'
+        END AS age_group
+    FROM retail_sales
+)
+SELECT 
+    age_group,
+    COUNT(transactions_id) AS total_transactions,
+    SUM(total_sale) AS total_revenue
+FROM Age_Demographics
+GROUP BY age_group
+ORDER BY total_revenue DESC;
+```
+
+###🏆 Top 5 VIP Customers
+Identifying the highest-spending customers by lifetime value.
+
+```sql
+SELECT 
+    customer_id,
+    gender,
+    age,
+    SUM(total_sale) AS lifetime_value
+FROM retail_sales
+GROUP BY customer_id, gender, age
+ORDER BY lifetime_value DESC
+LIMIT 5;
+```
+###⏰ Peak Shopping Hours
+By extracting the hour from the timestamp, I identified the busiest times of day to help store managers optimize staff scheduling.
+
+```sql
+SELECT 
+    HOUR(sale_time) AS hour_of_day,
+    COUNT(transactions_id) AS foot_traffic,
+    SUM(total_sale) AS revenue_generated
+FROM retail_sales
+GROUP BY HOUR(sale_time)
+ORDER BY hour_of_day DESC;
 ```
