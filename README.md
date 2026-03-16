@@ -31,3 +31,31 @@ CREATE TABLE retail_sales (
     cogs FLOAT,
     total_sale FLOAT
 );
+
+## 🧹 Step 2: Data Cleaning
+Real-world data is messy. After importing the CSV file, I identified 13 records with missing values. I deleted rows missing critical financial data, but preserved transaction counts by dynamically imputing the missing customer ages using a subquery.
+
+```sql
+-- Identify missing records
+SELECT * FROM retail_sales
+WHERE age IS NULL 
+   OR quantity IS NULL 
+   OR price_per_unit IS NULL 
+   OR cogs IS NULL 
+   OR total_sale IS NULL;
+
+-- Remove rows with missing financial data
+DELETE FROM retail_sales
+WHERE quantity IS NULL OR total_sale IS NULL;
+
+-- Impute missing ages with the average age of all customers
+UPDATE retail_sales
+SET age = (
+    SELECT avg_age FROM (
+        SELECT AVG(age) AS avg_age 
+        FROM retail_sales 
+        WHERE age IS NOT NULL
+    ) AS temp_table
+)
+WHERE age IS NULL;
+
