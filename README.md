@@ -11,7 +11,7 @@ The analysis encompasses the entire ETL (Extract, Transform, Load) process, incl
 
 ---
 
-## 🚀 Step 1: Database Setup
+## 🚀 Database Setup
 The first step was to build the foundation. I created the database and defined the strict schema for the `retail_sales` table to ensure data integrity during the import process.
 
 ```sql
@@ -31,8 +31,9 @@ CREATE TABLE retail_sales (
     cogs FLOAT,
     total_sale FLOAT
 );
+```
 
-## 🧹 Step 2: Data Cleaning
+## 🧹 Data Cleaning
 Real-world data is messy. After importing the CSV file, I identified 13 records with missing values. I deleted rows missing critical financial data, but preserved transaction counts by dynamically imputing the missing customer ages using a subquery.
 
 ```sql
@@ -58,4 +59,17 @@ SET age = (
     ) AS temp_table
 )
 WHERE age IS NULL;
+```
+## 🔍 Exploratory Data Analysis (EDA)
+Before diving into complex metrics, I ran a few basic queries to understand the shape and scope of the dataset.
 
+```sql
+-- Total number of successful transactions
+SELECT COUNT(*) AS total_transactions FROM retail_sales;
+
+-- Total number of unique customers
+SELECT COUNT(DISTINCT customer_id) AS unique_customers FROM retail_sales;
+
+-- Available product categories
+SELECT DISTINCT category FROM retail_sales;
+```
