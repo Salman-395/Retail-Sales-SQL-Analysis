@@ -1,7 +1,7 @@
 # 📊 Retail Sales Analysis SQL Project
 
 ## 📌 Project Overview
-This project demonstrates my ability to execute an end-to-end data analysis workflow using SQL. The goal of this project is to transform raw retail transaction data into actionable business insights. 
+This project demonstrates an end-to-end data analysis workflow using SQL. The goal of this project is to transform raw retail transaction data into actionable business insights. 
 
 The analysis encompasses the entire ETL (Extract, Transform, Load) process, including database creation, handling missing/null values, exploratory data analysis (EDA), and advanced querying to uncover financial performance, customer demographics, and operational trends.
 
@@ -145,7 +145,7 @@ GROUP BY age_group
 ORDER BY total_revenue DESC;
 ```
 
-### 🏆 Top 5 VIP Customers
+### 🏆 Top 5 Customers
 Identifying the highest-spending customers by lifetime value.
 
 ```sql
