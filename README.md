@@ -73,3 +73,45 @@ SELECT COUNT(DISTINCT customer_id) AS unique_customers FROM retail_sales;
 -- Available product categories
 SELECT DISTINCT category FROM retail_sales;
 ```
+## 📈 Business & Financial Analysis
+These queries answer core business questions regarding revenue, profitability, and customer behavior.
+
+### 💰 Profitability by Category
+Revenue is vanity, profit is sanity. I calculated the actual net profit per category by subtracting the Cost of Goods Sold (COGS).
+
+```sql
+SELECT 
+    category,
+    SUM(total_sale) AS total_revenue,
+    SUM(cogs) AS total_cost,
+    SUM(total_sale - cogs) AS total_profit
+FROM retail_sales
+GROUP BY category
+ORDER BY total_profit DESC;
+```
+
+### 📅 Monthly Sales Trend
+Grouping dates to find seasonal trends and track revenue month-over-month.
+
+```sql
+SELECT 
+    DATE_FORMAT(sale_date, '%Y-%m') AS sale_month,
+    SUM(total_sale) AS monthly_revenue,
+    COUNT(transactions_id) AS total_orders
+FROM retail_sales
+GROUP BY DATE_FORMAT(sale_date, '%Y-%m')
+ORDER BY sale_month ASC;
+```
+
+### 🚻 Spending Habits by Gender
+Understanding which demographic drives higher transaction volume and total revenue.
+
+```sql
+SELECT 
+    gender,
+    COUNT(transactions_id) AS total_purchases,
+    SUM(total_sale) AS total_spent,
+    AVG(total_sale) AS avg_spent_per_transaction
+FROM retail_sales
+GROUP BY gender;
+```
